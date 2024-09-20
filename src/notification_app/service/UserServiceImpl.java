@@ -2,14 +2,26 @@ package notification_app.service;
 
 import java.util.List;
 
+import notification_app.factory.ObjectFactory;
 import notification_app.mock_db.DataRepository;
 import notification_app.mock_db.User;
 
 public class UserServiceImpl implements UserService {
-	private final DataRepository repository;
 	
-	public UserServiceImpl(DataRepository repository) {
-		this.repository = repository;
+	private static UserServiceImpl INSTANCE;
+	
+	private DataRepository repository;
+	
+	private UserServiceImpl() {
+		this.repository = ObjectFactory.getDataRepository();
+	}
+	
+	synchronized public static UserServiceImpl getInstance() {
+		if(INSTANCE==null) {
+			INSTANCE = new UserServiceImpl();
+		}
+		
+		return INSTANCE;
 	}
 	
 	@Override

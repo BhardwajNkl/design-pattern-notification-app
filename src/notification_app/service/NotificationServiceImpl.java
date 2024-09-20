@@ -18,12 +18,25 @@ import notification_app.mock_db.Notification;
 
 public class NotificationServiceImpl implements NotificationService, Subject {
 	
+	private static NotificationServiceImpl INSTANCE;
+	
 	// state
 	List<Notification> notifications = new ArrayList<>();
 	
 	// observers
 	Set<Observer> observers = new HashSet<>();
 	
+	private NotificationServiceImpl() {
+		
+	}
+	
+	synchronized public static NotificationServiceImpl getInstance() {
+		if(INSTANCE==null) {
+			INSTANCE = new NotificationServiceImpl();
+		}
+		
+		return INSTANCE;
+	}
 	
 	
 	@Override

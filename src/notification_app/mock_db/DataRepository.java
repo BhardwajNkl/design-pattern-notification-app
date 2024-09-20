@@ -5,9 +5,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class DataRepository {
+	private static DataRepository INSTANCE;
+	
 	private List<User> users = new ArrayList<>();
 	
 	private List<String> subscribers = new ArrayList<>();
+	
+	private DataRepository() {
+		
+	}
+	
+	synchronized static public DataRepository getInstance() {
+		if(INSTANCE==null) {
+			INSTANCE = new DataRepository();
+		}
+		
+		return INSTANCE;
+	}
 	
 	public void addUser(User user) {
 		this.users.add(user);

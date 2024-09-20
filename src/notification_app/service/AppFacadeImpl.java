@@ -2,21 +2,28 @@ package notification_app.service;
 
 import java.util.List;
 
+import notification_app.factory.ObjectFactory;
 import notification_app.mock_db.User;
 
 public class AppFacadeImpl implements AppFacade {
+	private static AppFacadeImpl INSTANCE;
 	private final UserService userService;
 	private final SubscriptionService subscriptionService;
 	private final NotificationService notificationService;
 	
-	public AppFacadeImpl(UserService userService,
-			SubscriptionService subscriptionService,
-			NotificationService notificationService) {
-		this.userService = userService;
-		this.subscriptionService = subscriptionService;
-		this.notificationService= notificationService;
+	private AppFacadeImpl() {
+		this.userService = ObjectFactory.getUserService();
+		this.subscriptionService = ObjectFactory.getSubscriptionService();
+		this.notificationService= ObjectFactory.getNotificationService();
 	}
 	
+	
+	synchronized public static AppFacade getInstance() {
+		if(INSTANCE==null) {
+			INSTANCE = new AppFacadeImpl();
+		}
+		return INSTANCE;
+	}
 	
 	@Override
 	public boolean addUser(User user) {
@@ -52,5 +59,6 @@ public class AppFacadeImpl implements AppFacade {
 	public void addNotification(String subject, String message, String channel) {
 		notificationService.addNotification(subject, message, channel);
 	}
+
 
 }

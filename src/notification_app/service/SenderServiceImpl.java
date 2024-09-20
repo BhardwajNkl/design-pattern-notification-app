@@ -1,16 +1,28 @@
 package notification_app.service;
 
+import notification_app.factory.ObjectFactory;
 import notification_app.mock_db.Notification;
 
 public class SenderServiceImpl implements SenderService, Observer {
 	
-	private Notification notification;
+	private static SenderServiceImpl INSTANCE;
+	
 	private SubscriptionService subscriptionService;
+	private NotificationServiceImpl subject;
+	private Notification notification;
 	private SenderStrategy senderStrategy;
 	
-	public SenderServiceImpl(Subject subject, SubscriptionService subscriptionService) {
-		this.subscriptionService = subscriptionService;
+	private SenderServiceImpl() {
+		this.subscriptionService = ObjectFactory.getSubscriptionService();
+		this.subject = (NotificationServiceImpl) ObjectFactory.getNotificationService();
 		subject.register(this);
+	}
+	
+	synchronized public static SenderServiceImpl getInstance() {
+		if(INSTANCE==null) {
+			INSTANCE = new SenderServiceImpl();
+		}
+		return INSTANCE;
 	}
 
 	@Override
@@ -23,9 +35,9 @@ public class SenderServiceImpl implements SenderService, Observer {
 	public void send() {
 		// send the notification to all subscribers
 		if(notification.getChannel().equals("email")) {
-			senderStrategy = new SendByEmail();
+			senderStrategy = ObjectFactory.getSendByEmail();
 		} else {
-			senderStrategy = new SendBySMS();
+			senderStrategy = ObjectFactory.getSendBySMS();
 		}
 		
 		subscriptionService.getSubscribers().forEach(subscriber->{

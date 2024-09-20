@@ -4,34 +4,21 @@ import static notification_app.util.ConsoleColors.BLUE_BOLD;
 import static notification_app.util.ConsoleColors.DEFAULT;
 import static notification_app.util.ConsoleColors.GREEN_BOLD;
 import static notification_app.util.ConsoleColors.RED_BOLD;
-import static notification_app.util.ConsoleColors.YELLOW_BOLD;
 import static notification_app.util.ConsoleColors.RESET;
-
+import static notification_app.util.ConsoleColors.YELLOW_BOLD;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import notification_app.mock_db.DataRepository;
+import notification_app.factory.ObjectFactory;
 import notification_app.mock_db.User;
-import notification_app.service.AppFacadeImpl;
-import notification_app.service.NotificationServiceImpl;
-import notification_app.service.SenderServiceImpl;
-import notification_app.service.SubscriptionService;
-import notification_app.service.SubscriptionServiceImpl;
-import notification_app.service.UserService;
-import notification_app.service.UserServiceImpl;public class Main {
+import notification_app.service.AppFacade;public class Main {
 	public static void main(String args[]) throws IOException {
-		DataRepository repository = new DataRepository(); // use singleton
-		UserService userService = new UserServiceImpl(repository);
-		SubscriptionService subscriptionService = new SubscriptionServiceImpl(repository);
-		NotificationServiceImpl notificationServiceImpl = new NotificationServiceImpl();
 		
-		// THE FOLLOWING OBJECT IS NOT USED IN THIS CLASS. BUT WE NEEDED A SENDERSERVICE OBJECT IN THE APP, THAT'S WHY CREATED.
-		new SenderServiceImpl(notificationServiceImpl, subscriptionService); // sender service observes notification service subject		
-		
-		AppFacadeImpl appFacadeImpl = new AppFacadeImpl(userService, subscriptionService, notificationServiceImpl);
+		ObjectFactory.getSenderService(); // to get a sender service object in the system. it gets registered with notification service object.
+		AppFacade appFacadeImpl = ObjectFactory.getAppFacade();
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String input="";

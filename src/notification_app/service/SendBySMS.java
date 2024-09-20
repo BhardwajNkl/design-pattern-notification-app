@@ -7,6 +7,19 @@ import static notification_app.util.ConsoleColors.GREEN_BOLD;
 import notification_app.mock_db.Notification;
 
 public class SendBySMS implements SenderStrategy {
+	private static SendBySMS INSTANCE;
+	
+	private SendBySMS() {
+		
+	}
+	
+	synchronized public static SendBySMS getInstance() {
+		if(INSTANCE==null) {
+			INSTANCE = new SendBySMS();
+		}
+		return INSTANCE;
+	}
+	
 	@Override
 	public void send(String subscriber, Notification notification) {
 		System.out.println(BLUE_BOLD+"Sending SMS to: "+DEFAULT+GREEN_BOLD+subscriber+DEFAULT);

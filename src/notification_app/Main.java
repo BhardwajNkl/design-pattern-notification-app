@@ -1,11 +1,13 @@
 package notification_app;
 
 import static notification_app.util.ConsoleColors.BLUE_BOLD;
+
 import static notification_app.util.ConsoleColors.DEFAULT;
 import static notification_app.util.ConsoleColors.GREEN_BOLD;
 import static notification_app.util.ConsoleColors.RED_BOLD;
 import static notification_app.util.ConsoleColors.RESET;
 import static notification_app.util.ConsoleColors.YELLOW_BOLD;
+import static notification_app.util.ConsoleColors.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,7 +30,7 @@ import notification_app.service.AppFacade;public class Main {
 		showMenu(); // only shown in the beginning. latter only when user enters invalid commands or when the user needs help.
 		
 		do {
-			System.out.print(YELLOW_BOLD+">> ");
+			System.out.print(PURPLE_BOLD+"command $ "+YELLOW_BOLD);
 			input = br.readLine();
 			System.out.print(DEFAULT);
 			

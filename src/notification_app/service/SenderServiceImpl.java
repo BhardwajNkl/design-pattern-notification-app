@@ -1,6 +1,7 @@
 package notification_app.service;
 
 import notification_app.factory.ObjectFactory;
+import static notification_app.util.ConsoleColors.*;
 import notification_app.mock_db.Notification;
 
 public class SenderServiceImpl implements SenderService, Observer {
@@ -34,15 +35,20 @@ public class SenderServiceImpl implements SenderService, Observer {
 	@Override
 	public void send() {
 		// send the notification to all subscribers
-		if(notification.getChannel().equals("email")) {
-			senderStrategy = ObjectFactory.getSendByEmail();
-		} else {
-			senderStrategy = ObjectFactory.getSendBySMS();
-		}
+//		if(notification.getChannel().equals("email")) {
+//			senderStrategy = ObjectFactory.getSendByEmail();
+//		} else {
+//			senderStrategy = ObjectFactory.getSendBySMS();
+//		}
 		
-		subscriptionService.getSubscribers().forEach(subscriber->{
-			senderStrategy.send(subscriber, notification);
-		});
+		senderStrategy = ObjectFactory.getSenderStrategy(notification.getChannel());
+		if(senderStrategy!=null) {
+			subscriptionService.getSubscribers().forEach(subscriber->{
+				senderStrategy.send(subscriber, notification);
+			});
+		} else {
+			System.out.println(RED_BOLD+"Cannot send notification on this channel! [ Unknown channel: "+notification.getChannel()+"]"+DEFAULT+"\n");
+		}
 	}
 
 }

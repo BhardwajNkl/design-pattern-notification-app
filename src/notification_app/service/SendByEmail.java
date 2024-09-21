@@ -22,6 +22,12 @@ public class SendByEmail implements SenderStrategy {
 	
 	@Override
 	public void send(String subscriber, Notification notification) {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 		System.out.println(BLUE_BOLD+"Sending Email to: "+DEFAULT+GREEN_BOLD+subscriber+DEFAULT);
 		System.out.println(BLUE_BOLD+"Notification is:"+DEFAULT);
 		System.out.println(BLUE_BOLD+notification+DEFAULT);

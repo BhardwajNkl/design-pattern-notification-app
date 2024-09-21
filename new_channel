@@ -1,0 +1,24 @@
+package notification_app.service;
+
+import notification_app.mock_db.Notification;
+import notification_app.service.SenderStrategy;
+
+public class SendByTelegram implements SenderStrategy {
+	private static SendByTelegram INSTANCE;
+	private SendByTelegram() {
+		
+	}
+	
+	synchronized public static SendByTelegram getInstance() {
+		if(INSTANCE==null) {
+			INSTANCE = new SendByTelegram();
+		}
+		
+		return INSTANCE;
+	}
+	
+	@Override
+	public void send(String subscriber, Notification notification) {
+		System.out.println("sending by telegram to: "+subscriber);
+	}
+}

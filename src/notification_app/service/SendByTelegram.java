@@ -6,17 +6,18 @@ import static notification_app.util.ConsoleColors.GREEN_BOLD;
 
 import notification_app.mock_db.Notification;
 
-public class SendBySms implements SenderStrategy {
-	private static SendBySms INSTANCE;
-	
-	private SendBySms() {
+public class SendByTelegram implements SenderStrategy {
+
+	private static SendByTelegram INSTANCE;
+	private SendByTelegram() {
 		
 	}
 	
-	synchronized public static SendBySms getInstance() {
+	synchronized public static SendByTelegram getInstance() {
 		if(INSTANCE==null) {
-			INSTANCE = new SendBySms();
+			INSTANCE = new SendByTelegram();
 		}
+		
 		return INSTANCE;
 	}
 	
@@ -28,7 +29,7 @@ public class SendBySms implements SenderStrategy {
 			e.printStackTrace();
 		}
 		
-		System.out.println(BLUE_BOLD+"Sending SMS to: "+DEFAULT+GREEN_BOLD+subscriber+DEFAULT);
+		System.out.println(BLUE_BOLD+"Sending Telegram to: "+DEFAULT+GREEN_BOLD+subscriber+DEFAULT);
 		System.out.println(BLUE_BOLD+"Notification is:"+DEFAULT);
 		System.out.println(BLUE_BOLD+notification+DEFAULT);
 		try {
@@ -38,4 +39,5 @@ public class SendBySms implements SenderStrategy {
 		}
 		System.out.println(GREEN_BOLD+"***Sent***\n"+DEFAULT);
 	}
+
 }

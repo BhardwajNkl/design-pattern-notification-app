@@ -1,0 +1,7 @@
+package notification_app.service;
+
+public class Caller {
+	public void call(String mobileNumber, String message) {
+		System.out.println("Calling to: "+mobileNumber);
+	}
+}

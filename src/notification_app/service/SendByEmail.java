@@ -22,6 +22,7 @@ public class SendByEmail implements SenderStrategy {
 	
 	@Override
 	public void send(String subscriber, Notification notification) {
+		
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
@@ -31,12 +32,40 @@ public class SendByEmail implements SenderStrategy {
 		System.out.println(BLUE_BOLD+"Sending Email to: "+DEFAULT+GREEN_BOLD+subscriber+DEFAULT);
 		System.out.println(BLUE_BOLD+"Notification is:"+DEFAULT);
 		System.out.println(BLUE_BOLD+notification+DEFAULT);
+		
+		// let's simulate the sending by printing stars to indicate some process.
+		// we use a random time interval as 'email send time'. Instead of considering random time, we can just pick random number of stars to print.
+		int starsToPrint = (int) (Math.random()*10) + 4; // 4 to 14 stars to print meaning around 2 to 7 second interval. 
+		Thread starPrinter = new Thread(()->{
+			// 20 stars in 10 seconds
+			for(int i=1;i<=starsToPrint;i++) {
+				System.out.print(GREEN_BOLD);
+				System.out.print("* ");
+				try {
+					Thread.sleep(500);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		starPrinter.start();
+		
 		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
+			starPrinter.join();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(GREEN_BOLD+"***Sent***\n"+DEFAULT);
+		
+		System.out.println(" Sent\n"+DEFAULT);
+
+//		try {
+//			
+//			Thread.sleep(10000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+//		System.out.println(GREEN_BOLD+"***Sent***\n"+DEFAULT);
 	}
 
 }

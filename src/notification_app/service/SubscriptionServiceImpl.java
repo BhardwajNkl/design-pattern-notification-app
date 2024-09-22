@@ -2,7 +2,7 @@ package notification_app.service;
 
 import java.util.List;
 
-import notification_app.factory.ObjectFactory;
+import notification_app.factory.AppContext;
 import notification_app.mock_db.DataRepository;
 
 public class SubscriptionServiceImpl implements SubscriptionService {
@@ -12,7 +12,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	private final DataRepository repository;
 	
 	public SubscriptionServiceImpl() {
-		this.repository = ObjectFactory.getDataRepository();
+		this.repository = AppContext.getObject(DataRepository.class);
 	}
 	
 	synchronized public static SubscriptionServiceImpl getInstance() {
@@ -24,15 +24,13 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	}
 	
 	@Override
-	public boolean addSubscriber(String name) {
+	public void addSubscriber(String name) {
 		repository.addSubscriber(name);
-		return true;
 	}
 	
 	@Override
-	public boolean deleteSubscriber(String name) {
+	public void deleteSubscriber(String name) {
 		repository.deleteSubscriber(name);
-		return true;
 	}
 	
 	@Override

@@ -2,19 +2,21 @@ package notification_app.service;
 
 import java.util.List;
 
-import notification_app.factory.ObjectFactory;
-import notification_app.mock_db.User;
+import notification_app.factory.AppContext;
+import notification_app.mock_db.model.User;
 
 public class AppFacadeImpl implements AppFacade {
+	
 	private static AppFacadeImpl INSTANCE;
+	
 	private final UserService userService;
 	private final SubscriptionService subscriptionService;
 	private final NotificationService notificationService;
 	
 	private AppFacadeImpl() {
-		this.userService = ObjectFactory.getUserService();
-		this.subscriptionService = ObjectFactory.getSubscriptionService();
-		this.notificationService= ObjectFactory.getNotificationService();
+		this.userService = AppContext.getObject(UserService.class);
+		this.subscriptionService = AppContext.getObject(SubscriptionService.class);
+		this.notificationService= AppContext.getObject(NotificationService.class);
 	}
 	
 	
@@ -26,23 +28,23 @@ public class AppFacadeImpl implements AppFacade {
 	}
 	
 	@Override
-	public boolean addUser(User user) {
-		return userService.addUser(user);
+	public void addUser(User user) {
+		userService.addUser(user);
 	}
 	
 	@Override
-	public boolean deleteUser(String name) {
-		return userService.deleteUser(name);
+	public void deleteUser(String name) {
+		userService.deleteUser(name);
 	}
 
 	@Override
-	public boolean addSubscriber(String name) {
-		return subscriptionService.addSubscriber(name);
+	public void addSubscriber(String name) {
+		subscriptionService.addSubscriber(name);
 	}
 	
 	@Override
-	public boolean deleteSubscriber(String name) {
-		return subscriptionService.deleteSubscriber(name);
+	public void deleteSubscriber(String name) {
+		subscriptionService.deleteSubscriber(name);
 	}
 
 	@Override

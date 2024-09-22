@@ -1,9 +1,11 @@
-package notification_app.mock_db;
+package notification_app.mock_db.model;
 
 public class Notification {
+	
 	private String subject;
 	private String message;
 	private String channel;
+	
 	public Notification(String subject, String message, String channel) {
 		super();
 		this.subject = subject;

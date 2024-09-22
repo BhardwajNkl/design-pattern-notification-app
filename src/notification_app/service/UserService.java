@@ -2,10 +2,10 @@ package notification_app.service;
 
 import java.util.List;
 
-import notification_app.mock_db.User;
+import notification_app.mock_db.model.User;
 
 public interface UserService {
-	boolean addUser(User user);
-	boolean deleteUser(String name);
+	void addUser(User user);
+	void deleteUser(String name);
 	List<User> getUsers();
 }

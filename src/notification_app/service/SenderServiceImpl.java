@@ -1,8 +1,11 @@
 package notification_app.service;
 
-import notification_app.factory.ObjectFactory;
-import static notification_app.util.ConsoleColors.*;
-import notification_app.mock_db.Notification;
+import static notification_app.util.ConsoleColors.DEFAULT;
+import static notification_app.util.ConsoleColors.RED_BOLD;
+
+import notification_app.factory.AppContext;
+import notification_app.factory.SenderStrategyFactory;
+import notification_app.mock_db.model.Notification;
 
 public class SenderServiceImpl implements SenderService, Observer {
 	
@@ -14,8 +17,8 @@ public class SenderServiceImpl implements SenderService, Observer {
 	private SenderStrategy senderStrategy;
 	
 	private SenderServiceImpl() {
-		this.subscriptionService = ObjectFactory.getSubscriptionService();
-		this.subject = (NotificationServiceImpl) ObjectFactory.getNotificationService();
+		this.subscriptionService = AppContext.getObject(SubscriptionService.class);
+		this.subject = (NotificationServiceImpl) AppContext.getObject(NotificationService.class);
 		subject.register(this);
 	}
 	
@@ -33,15 +36,8 @@ public class SenderServiceImpl implements SenderService, Observer {
 	}
 
 	@Override
-	public void send() {
-		// send the notification to all subscribers
-//		if(notification.getChannel().equals("email")) {
-//			senderStrategy = ObjectFactory.getSendByEmail();
-//		} else {
-//			senderStrategy = ObjectFactory.getSendBySMS();
-//		}
-		
-		senderStrategy = ObjectFactory.getSenderStrategy(notification.getChannel());
+	public void send() {		
+		senderStrategy = SenderStrategyFactory.getSenderStrategy(notification.getChannel());
 		if(senderStrategy!=null) {
 			subscriptionService.getSubscribers().forEach(subscriber->{
 				senderStrategy.send(subscriber, notification);

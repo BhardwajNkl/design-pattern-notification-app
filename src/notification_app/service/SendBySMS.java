@@ -4,7 +4,7 @@ import static notification_app.util.ConsoleColors.BLUE_BOLD;
 import static notification_app.util.ConsoleColors.DEFAULT;
 import static notification_app.util.ConsoleColors.GREEN_BOLD;
 
-import notification_app.mock_db.Notification;
+import notification_app.mock_db.model.Notification;
 
 public class SendBySms implements SenderStrategy {
 	private static SendBySms INSTANCE;

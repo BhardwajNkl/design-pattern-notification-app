@@ -2,9 +2,9 @@ package notification_app.service;
 
 import java.util.List;
 
-import notification_app.factory.ObjectFactory;
+import notification_app.factory.AppContext;
 import notification_app.mock_db.DataRepository;
-import notification_app.mock_db.User;
+import notification_app.mock_db.model.User;
 
 public class UserServiceImpl implements UserService {
 	
@@ -13,7 +13,7 @@ public class UserServiceImpl implements UserService {
 	private DataRepository repository;
 	
 	private UserServiceImpl() {
-		this.repository = ObjectFactory.getDataRepository();
+		this.repository = AppContext.getObject(DataRepository.class);
 	}
 	
 	synchronized public static UserServiceImpl getInstance() {
@@ -25,15 +25,13 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public boolean addUser(User user) {
+	public void addUser(User user) {
 		repository.addUser(user);
-		return true;
 	}
 	
 	@Override
-	public boolean deleteUser(String name) {
+	public void deleteUser(String name) {
 		repository.deleteUser(name);
-		return true;
 	}
 	
 	@Override

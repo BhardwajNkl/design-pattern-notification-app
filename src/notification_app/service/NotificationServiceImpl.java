@@ -5,15 +5,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import notification_app.mock_db.Notification;
+import notification_app.mock_db.model.Notification;
 
 /**
- * 
  * @author nikhilbhardwaj01
- * notification service has a state: messages
- * it is the subject class being observed by message sender service.
- * whenever a message comes, message sender is updated and that service sends mails/sms to all subscribers.
- *
+ * 
+ * It is the subject(observable) class being observed by message sender service.
+ * NotificationService has a state: 'notifications'
+ * whenever a notification is added, SenderService is updated and that service sends the newly added notification to all subscribers using the given channel.
  */
 
 public class NotificationServiceImpl implements NotificationService, Subject {
@@ -40,11 +39,10 @@ public class NotificationServiceImpl implements NotificationService, Subject {
 	
 	
 	@Override
-	public boolean addNotification(String subject, String message, String channel) { 
+	public void addNotification(String subject, String message, String channel) { 
 		Notification notification = new Notification(subject, message, channel);
 		notifications.add(notification);
 		updateObservers();
-		return true;
 	}
 
 	@Override

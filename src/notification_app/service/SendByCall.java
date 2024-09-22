@@ -1,9 +1,14 @@
 package notification_app.service;
 
-import notification_app.factory.ObjectFactory;
-import notification_app.mock_db.Notification;
+import notification_app.mock_db.model.Notification;
 
-// adapter class for Caller channel
+/**
+ * 
+ * @author nikhilbhardwaj01
+ * 
+ * This class is an adapter class for 'Caller' class.
+ *
+ */
 
 public class SendByCall implements SenderStrategy {
 
@@ -11,7 +16,7 @@ public class SendByCall implements SenderStrategy {
 	private Caller caller;
 	
 	private SendByCall() {
-		this.caller = ObjectFactory.getCaller();
+		this.caller = new Caller();
 	}
 	
 	synchronized public static SendByCall getInstance() {
@@ -25,7 +30,7 @@ public class SendByCall implements SenderStrategy {
 	@Override
 	public void send(String subscriber, Notification notification) {
 		// the caller class provides call method which takes mobile number and message.
-		String mobileNuber = subscriber+100;
+		String mobileNuber = subscriber+"_mobile_number[placeholder]"; // just for demo.
 		String message = notification.getMessage();
 		caller.call(mobileNuber, message);
 	}

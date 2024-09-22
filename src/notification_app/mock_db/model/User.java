@@ -1,20 +1,12 @@
-package notification_app.mock_db;
+package notification_app.mock_db.model;
 
 public class User {
-//	private int id;
+	
 	private String name;
+	
 	public User(String name) {
-//		this.id=id;
 		this.name=name;
 	}
-	
-//	public void setId(int id) {
-//		this.id = id;
-//	}
-//	
-//	public int getId() {
-//		return this.id;
-//	}
 	
 	public void setName(String name) {
 		this.name = name;

@@ -42,7 +42,7 @@ import notification_app.service.AppFacade;public class Main {
 
 			switch (command) {
 			case "add_user": {
-				// for this command, the input is like: add_user "name" "email" "mobile"
+				// for this command, the input is like: add_user "name" "email" "smsNumber"
 				if (inputTokens.length < 2) {
 					System.out.println(
 							RED_BOLD + "Incorrect command syntax: Please pass the name of the user." + DEFAULT);
@@ -50,14 +50,14 @@ import notification_app.service.AppFacade;public class Main {
 				} else {
 					String userName = inputTokens[1];
 					String userEmail = null;
-					String userMobile = null;
+					String userSmsNumber = null;
 					try {
 						userEmail = inputTokens[2];
-						userMobile = inputTokens[3];
+						userSmsNumber = inputTokens[3];
 					} catch(Exception e) {
 						
 					}
-					appFacade.addUser(new User(userName, userEmail, userMobile));
+					appFacade.addUser(new User(userName, userEmail, userSmsNumber));
 				}
 				break;
 			}
@@ -118,7 +118,24 @@ import notification_app.service.AppFacade;public class Main {
 			}
 
 			case "add_notification": {
-				appFacade.addNotification(inputTokens[1], inputTokens[2], inputTokens[3]);
+				if(inputTokens.length<4) {
+					System.out.println(
+							RED_BOLD + "Incorrect command syntax: Please pass all arguments." + DEFAULT);
+					showMenu();
+				} else {
+					appFacade.addNotification(inputTokens[1], inputTokens[2], inputTokens[3]);
+				}
+				break;
+			}
+			
+			case "add_user_channel": {
+				if(inputTokens.length<4) {
+					System.out.println(
+							RED_BOLD + "Incorrect command syntax: Please pass all arguments." + DEFAULT);
+					showMenu();
+				} else {
+					appFacade.addUserAvailabilityChannel(inputTokens[1], inputTokens[2], inputTokens[3]);
+				}
 				break;
 			}
 
@@ -144,18 +161,19 @@ import notification_app.service.AppFacade;public class Main {
 	}
 	
 	private static void showMenu() {
-		System.out.println("|=======================================================================|");
-		System.out.println("| Enter your command. Syntax is as below.                               |");
-		System.out.println("| 1. To add user: "+YELLOW_BOLD+"add_user <name>"+DEFAULT+"                                       |");
-		System.out.println("| 2. To delete user: "+YELLOW_BOLD+"delete_user <name>"+DEFAULT+"                                 |");
-		System.out.println("| 3. To add subscriber: "+YELLOW_BOLD+"add_subscriber <user's name>"+DEFAULT+"                    |");
-		System.out.println("| 4. To delete subscriber: "+YELLOW_BOLD+"delete_subscriber <user's name>"+DEFAULT+"              |");
-		System.out.println("| 5. To add notification: "+YELLOW_BOLD+"add_notification <subject> <message> <channel>"+DEFAULT+"|");
-		System.out.println("| 6. To get list of users: "+YELLOW_BOLD+"get_users"+DEFAULT+"                                    |");
-		System.out.println("| 7. To get list of subscribers: "+YELLOW_BOLD+"get_subscribers"+DEFAULT+"                        |");
-		System.out.println("| 8. To Exit: "+YELLOW_BOLD+"exit"+DEFAULT+"                                                      |");
-		System.out.println("| 9. To get this menu: "+YELLOW_BOLD+"menu"+DEFAULT+"                                             |");
-		System.out.println("|=======================================================================|");
+		System.out.println("|===========================================================================================|");
+		System.out.println("| Enter your command. Syntax is as below.                                                   |");
+		System.out.println("| 1. To add user: "+YELLOW_BOLD+"add_user <name> <email_optional> <sms_number_optional>"+DEFAULT+"                    |");
+		System.out.println("| 2. To delete user: "+YELLOW_BOLD+"delete_user <name>"+DEFAULT+"                                                     |");
+		System.out.println("| 3. To add subscriber: "+YELLOW_BOLD+"add_subscriber <user's name>"+DEFAULT+"                                        |");
+		System.out.println("| 4. To delete subscriber: "+YELLOW_BOLD+"delete_subscriber <user's name>"+DEFAULT+"                                  |");
+		System.out.println("| 5. To add notification: "+YELLOW_BOLD+"add_notification <subject> <message> <channel>"+DEFAULT+"                    |");
+		System.out.println("| 6. To get list of users: "+YELLOW_BOLD+"get_users"+DEFAULT+"                                                        |");
+		System.out.println("| 7. To get list of subscribers: "+YELLOW_BOLD+"get_subscribers"+DEFAULT+"                                            |");
+		System.out.println("| 8. To add new contact channel for a user: "+YELLOW_BOLD+"add_user_channel <user's name> <channel> <value>"+DEFAULT+"|");
+		System.out.println("| 9. To Exit: "+YELLOW_BOLD+"exit"+DEFAULT+"                                                                          |");
+		System.out.println("| 10.To get this menu: "+YELLOW_BOLD+"menu"+DEFAULT+"                                                                 |");
+		System.out.println("|===========================================================================================|");
 	}
 	
 	private static String[] sanitizeInputTokens(String input) {

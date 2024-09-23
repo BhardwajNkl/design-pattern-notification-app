@@ -1,15 +1,22 @@
 package notification_app.mock_db.model;
 
+import static notification_app.util.ConsoleColors.DEFAULT;
+import static notification_app.util.ConsoleColors.RED_BOLD;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class User {
 	
 	private String name;
-	private String email;
-	private String mobile;
 	
-	public User(String name, String email, String mobile) {
+	private Map<String, String> userChannelMap;
+	
+	public User(String name, String email, String smsNumber) {
 		this.name=name;
-		this.email = email;
-		this.mobile = mobile;
+		userChannelMap = new HashMap<>();
+		if(email!=null) userChannelMap.put("email", email);
+		if(smsNumber!=null) userChannelMap.put("sms", smsNumber);
 	}
 	
 	public void setName(String name) {
@@ -20,26 +27,26 @@ public class User {
 		return this.name;
 	}
 	
-	public void setEmail(String email) {
-		this.email = email;
+	public void addAvailabilityChannel(String channelName, String contactValue) {
+		if(!userChannelMap.containsKey(channelName)) {
+			userChannelMap.put(channelName, contactValue);
+		}
+		else {
+			System.out.println(RED_BOLD + "User has already added this availability channel!" + DEFAULT);
+		}
 	}
 	
-	public String getEmail() {
-		return this.email;
+	public Map<String, String> getUserChannelMap(){
+		return userChannelMap;
 	}
 	
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
 	
-	public String getMobile() {
-		return this.mobile;
-	}
 
 	@Override
 	public String toString() {
-		return "User [name=" + name + ", email=" + email + ", mobile=" + mobile + "]";
+		return "User [name=" + name + ", userChannelMap=" + userChannelMap + "]";
 	}
-		
+	
+	
 	
 }

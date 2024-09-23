@@ -8,4 +8,5 @@ public interface UserService {
 	void addUser(User user);
 	void deleteUser(String name);
 	List<User> getUsers();
+	void addUserAvailabilityChannel(String userName, String channelName, String channelContactValue);
 }

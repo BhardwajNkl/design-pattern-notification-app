@@ -12,6 +12,7 @@ public class SenderServiceImpl implements SenderService, Observer {
 	private static SenderServiceImpl INSTANCE;
 	
 	private SubscriptionService subscriptionService;
+	
 	private NotificationServiceImpl subject;
 	private Notification notification;
 	private SenderStrategy senderStrategy;
@@ -38,9 +39,17 @@ public class SenderServiceImpl implements SenderService, Observer {
 	@Override
 	public void send() {		
 		senderStrategy = SenderStrategyFactory.getSenderStrategy(notification.getChannel());
+		
 		if(senderStrategy!=null) {
-			subscriptionService.getSubscribers().forEach(subscriber->{
-				senderStrategy.send(subscriber, notification);
+			subscriptionService.getSubscribers().stream()
+			.map(subs->subscriptionService.getUserAssociatedWithSubscriber(subs)) // map subscriber to the respective user
+			.forEach(user->{
+				// if this subscriber is not active on given channel, we cannot send.
+				if(user.getUserChannelMap().containsKey(notification.getChannel())) {
+					senderStrategy.send(user, notification);
+				} else {
+					System.out.println(RED_BOLD+"Skipping User: "+user.getName() + " [ User is not available on channel: "+notification.getChannel()+"]"+DEFAULT+"\n");
+				}
 			});
 		} else {
 			System.out.println(RED_BOLD+"Cannot send notification on this channel! [ Unknown channel: "+notification.getChannel()+"]"+DEFAULT+"\n");

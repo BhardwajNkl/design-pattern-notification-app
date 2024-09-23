@@ -1,7 +1,8 @@
 package notification_app.service;
 
 import notification_app.mock_db.model.Notification;
+import notification_app.mock_db.model.User;
 
 public interface SenderStrategy {
-	void send(String subscriber, Notification notification);
+	void send(User subscriber, Notification notification);
 }

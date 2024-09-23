@@ -5,6 +5,7 @@ import static notification_app.util.ConsoleColors.DEFAULT;
 import static notification_app.util.ConsoleColors.GREEN_BOLD;
 
 import notification_app.mock_db.model.Notification;
+import notification_app.mock_db.model.User;
 
 public class SendByEmail implements SenderStrategy {
 	private static SendByEmail INSTANCE;
@@ -21,7 +22,7 @@ public class SendByEmail implements SenderStrategy {
 	}
 	
 	@Override
-	public void send(String subscriber, Notification notification) {
+	public void send(User subscriber, Notification notification) {
 		
 		try {
 			Thread.sleep(1000);

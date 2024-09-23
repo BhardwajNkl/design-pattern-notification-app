@@ -4,6 +4,7 @@ import java.util.List;
 
 import notification_app.factory.AppContext;
 import notification_app.mock_db.DataRepository;
+import notification_app.mock_db.model.User;
 
 public class SubscriptionServiceImpl implements SubscriptionService {
 	
@@ -37,4 +38,10 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	public List<String> getSubscribers(){
 		return repository.getSubscribers();
 	}
+
+	@Override
+	public User getUserAssociatedWithSubscriber(String subscriber) {
+		return repository.getUserAssociatedWithSubscriber(subscriber);
+	}
+	
 }

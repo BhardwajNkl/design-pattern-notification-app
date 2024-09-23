@@ -63,4 +63,10 @@ public class AppFacadeImpl implements AppFacade {
 	}
 
 
+	@Override
+	public void addUserAvailabilityChannel(String userName, String channelName, String channelContactValue) {
+		userService.addUserAvailabilityChannel(userName, channelName, channelContactValue);
+	}
+
+
 }

@@ -5,6 +5,7 @@ import static notification_app.util.ConsoleColors.RED_BOLD;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import notification_app.mock_db.model.User;
@@ -44,22 +45,33 @@ public class DataRepository {
 		return users;
 	}
 	
+	public User getUserByName(String name) {
+		Optional<User> user = users.stream().filter(u->u.getName().equals(name)).findFirst();
+		if(user.isPresent()) {
+			return user.get();
+		}
+		
+		return null;
+	}
+	
 	public void addSubscriber(String name) {
 		// check if user with given name exists
-		boolean userExists = users.stream().anyMatch(u->u.getName().equalsIgnoreCase(name));
-		if(!userExists) {
+		
+		boolean userWithGivenNameExists = users.stream().anyMatch(u->u.getName().equalsIgnoreCase(name));
+		
+		if(!userWithGivenNameExists) {
 			System.out.println(RED_BOLD + "User does not exist!" + DEFAULT);
 			return;
 		}
 		
-		// check if the user is already a subscriber
-		boolean subscriberExists = subscribers.stream().anyMatch(subs->subs.equalsIgnoreCase(name));
-		if(subscriberExists) {
+		// check if the user is already in subscriber list
+		boolean subscriberWithGivenNameExists = subscribers.stream().anyMatch(s->s.equalsIgnoreCase(name));
+		if(!subscriberWithGivenNameExists) {
+			subscribers.add(name);
+		} else {
 			System.out.println(RED_BOLD + "The user is already a subscriber!" + DEFAULT);
 			return;
 		}
-		
-		subscribers.add(name);
 	}
 	
 	public List<String> getSubscribers(){
@@ -89,5 +101,9 @@ public class DataRepository {
 		}
 		
 		subscribers = subscribers.stream().filter(subscriber->!subscriber.equals(name)).collect(Collectors.toList());
+	}
+	
+	public User getUserAssociatedWithSubscriber(String subscriber) {
+		return users.stream().filter(u->u.getName().equalsIgnoreCase(subscriber)).findFirst().get();
 	}
 }

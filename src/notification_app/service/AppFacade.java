@@ -12,4 +12,5 @@ public interface AppFacade {
 	List<User> getUsers();
 	List<String> getSubscribers();
 	void addNotification(String subject, String message, String channel);
+	void addUserAvailabilityChannel(String userName, String channelName, String channelContactValue);
 }

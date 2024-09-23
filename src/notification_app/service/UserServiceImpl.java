@@ -1,5 +1,8 @@
 package notification_app.service;
 
+import static notification_app.util.ConsoleColors.DEFAULT;
+import static notification_app.util.ConsoleColors.RED_BOLD;
+
 import java.util.List;
 
 import notification_app.factory.AppContext;
@@ -37,5 +40,15 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> getUsers(){
 		return repository.getUsers();
+	}
+
+	@Override
+	public void addUserAvailabilityChannel(String userName, String channelName, String channelContactValue) {
+		User user = repository.getUserByName(userName);
+		if(user!=null) {
+			user.addAvailabilityChannel(channelName, channelContactValue);
+		} else {
+			System.out.println(RED_BOLD + "User does not exist!" + DEFAULT);
+		}
 	}
 }

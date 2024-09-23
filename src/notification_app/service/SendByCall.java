@@ -1,6 +1,7 @@
 package notification_app.service;
 
 import notification_app.mock_db.model.Notification;
+import notification_app.mock_db.model.User;
 
 /**
  * 
@@ -28,7 +29,7 @@ public class SendByCall implements SenderStrategy {
 	}
 	
 	@Override
-	public void send(String subscriber, Notification notification) {
+	public void send(User subscriber, Notification notification) {
 		// the caller class provides call method which takes mobile number and message.
 		String mobileNuber = subscriber+"_mobile_number[placeholder]"; // just for demo.
 		String message = notification.getMessage();

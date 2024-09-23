@@ -11,6 +11,7 @@ import static notification_app.util.ConsoleColors.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import notification_app.factory.AppContext;
@@ -34,28 +35,35 @@ import notification_app.service.AppFacade;public class Main {
 			System.out.print(PURPLE_BOLD + "command " + YELLOW_BOLD+"$ ");
 			input = br.readLine();
 			System.out.print(DEFAULT);
-
-			input = input.trim().toLowerCase();
-			String[] inputTokens = input.split(" ");
+			
+			String[] inputTokens = sanitizeInputTokens(input);
 
 			command = inputTokens[0];
 
 			switch (command) {
 			case "add_user": {
-				// for this command, the 2nd token of input is the name of user
+				// for this command, the input is like: add_user "name" "email" "mobile"
 				if (inputTokens.length < 2) {
 					System.out.println(
 							RED_BOLD + "Incorrect command syntax: Please pass the name of the user." + DEFAULT);
 					showMenu();
 				} else {
 					String userName = inputTokens[1];
-					appFacade.addUser(new User(userName));
+					String userEmail = null;
+					String userMobile = null;
+					try {
+						userEmail = inputTokens[2];
+						userMobile = inputTokens[3];
+					} catch(Exception e) {
+						
+					}
+					appFacade.addUser(new User(userName, userEmail, userMobile));
 				}
 				break;
 			}
 
 			case "delete_user": {
-				// for this command, the 2nd token of input is the name of user
+				// for this command, the input is like: delete_user "name"
 				if (inputTokens.length < 2) {
 					System.out.println(
 							RED_BOLD + "Incorrect command syntax: Please pass the name of the user." + DEFAULT);
@@ -68,7 +76,7 @@ import notification_app.service.AppFacade;public class Main {
 			}
 
 			case "add_subscriber": {
-				// for this command, the 2nd token of input is the name of subscriber/user
+				// for this command, the input is like: add_subscriber "user_name"
 				if (inputTokens.length < 2) {
 					System.out.println(
 							RED_BOLD + "Incorrect command syntax: Please pass the name of the subscriber." + DEFAULT);
@@ -148,5 +156,26 @@ import notification_app.service.AppFacade;public class Main {
 		System.out.println("| 8. To Exit: "+YELLOW_BOLD+"exit"+DEFAULT+"                                                      |");
 		System.out.println("| 9. To get this menu: "+YELLOW_BOLD+"menu"+DEFAULT+"                                             |");
 		System.out.println("|=======================================================================|");
+	}
+	
+	private static String[] sanitizeInputTokens(String input) {
+		
+		input = input.trim().toLowerCase();
+		String[] inputTokens = input.split("\"");
+		
+		List<String> updatedTokens = new ArrayList<>();
+		
+		// the first word is command so no need to do anything on that. The arguments are inside double quotes so we need to remove that.
+		updatedTokens.add(inputTokens[0].trim());
+		
+		if(inputTokens.length>1) {
+			for(int i=1; i<inputTokens.length;i++) {
+				String token = inputTokens[i].trim();
+				if(token.length()==0) continue;
+				updatedTokens.add(token);
+			}
+		}
+		
+		return updatedTokens.toArray(new String[0]);
 	}
 }

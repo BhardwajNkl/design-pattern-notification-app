@@ -7,6 +7,11 @@ import static notification_app.util.ConsoleColors.GREEN_BOLD;
 import notification_app.mock_db.model.Notification;
 import notification_app.mock_db.model.User;
 
+/**
+ * This class implements the SenderStrategy interface and it is used to send notifications to subscribers via email.
+ * @author nikhilbhardwaj01
+ * @version 1.0
+ */
 public class SendByEmail implements SenderStrategy {
 	private static SendByEmail INSTANCE;
 	
@@ -59,14 +64,6 @@ public class SendByEmail implements SenderStrategy {
 		}
 		
 		System.out.println(" Sent\n"+DEFAULT);
-
-//		try {
-//			
-//			Thread.sleep(10000);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
-//		System.out.println(GREEN_BOLD+"***Sent***\n"+DEFAULT);
 	}
 
 }

@@ -9,6 +9,11 @@ import notification_app.factory.AppContext;
 import notification_app.mock_db.DataRepository;
 import notification_app.mock_db.model.User;
 
+/**
+ * This class provides methods related with user management.
+ * @author nikhilbhardwaj01
+ *
+ */
 public class UserServiceImpl implements UserService {
 	
 	private static UserServiceImpl INSTANCE;

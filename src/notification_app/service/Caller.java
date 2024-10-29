@@ -5,16 +5,16 @@ import static notification_app.util.ConsoleColors.DEFAULT;
 import static notification_app.util.ConsoleColors.GREEN_BOLD;
 
 /**
- * 
- * @author nikhilbhardwaj01
  * This class implements feature to make calls with given message on a given number.
  * 
- *
  * This class will be used in our application to send notifications to subscribers through mobile call.
  * But, this class cannot be used directly. Our application uses channels that implement the SenderStrategy interface. But this class does not do that and hence incompatible.
  * So, we will use the adapter pattern and create an adaptor class so that we can send notifications to our subscribers using this Caller class.
  * 
  * The adapter class is: SendByCall.java
+ * 
+ * @author nikhilbhardwaj01
+ * @version 1.0
  */
 
 public class Caller {

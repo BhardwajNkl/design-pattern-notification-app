@@ -16,21 +16,26 @@ import notification_app.service.UserService;
 import notification_app.service.UserServiceImpl;
 
 /**
+ * This class serves as a central object factory for our application.
+ * It holds all the necessary objects that any component of the application may require.
+ * 
+ * This class ensures that any class registered here, a singleton instance[However in our application, most classes are singleton themselves] of that class can be fetched any time.
+ * So this is helpful in dependency injection, as we can, in the constructor of any class, ask for it's dependencies from this factory.
  * 
  * @author nikhilbhardwaj01
- * 
- * This class serves as a central object factory for our application.
- * It has all the necessary objects that any component of the application may require.
- * 
- * We can run the application without having this, but then we will have to set the dependencies for each component manually.
- * Presence of this class ensures that any class registered here, a singleton instance[However in our application, most classes are singleton themselves] of that class can be fetched any time.
- * So this is helpful in dependency injection, as we can in the constructor of any class ask for it's dependencies from this factory.
+ * @version 1.0
  */
 
 public class AppContext {
 	
+	/*
+	 * A map with class names as key and an instance of respective class as value.
+	 */
 	private static Map<Class<?>, Object> map = new HashMap<>();
 	
+	/**
+	 * Initialize the map with the essential objects.
+	 */
 	public static void initialize() {
 		getObject(AppFacade.class);
 		getObject(DataRepository.class);
@@ -41,6 +46,10 @@ public class AppContext {
 
 	}
 	
+	/**
+	 * @param type The name of the class whose instance is required.
+	 * @return An object of the given class.
+	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T getObject(Class<T> type){
 		if(!map.containsKey(type)) {

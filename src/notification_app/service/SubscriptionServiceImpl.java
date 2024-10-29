@@ -6,6 +6,12 @@ import notification_app.factory.AppContext;
 import notification_app.mock_db.DataRepository;
 import notification_app.mock_db.model.User;
 
+/**
+ * This class provides methods related to subscriber management.
+ * 
+ * @author nikhilbhardwaj01
+ * @version 1.0
+ */
 public class SubscriptionServiceImpl implements SubscriptionService {
 	
 	private static SubscriptionServiceImpl INSTANCE;

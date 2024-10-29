@@ -7,6 +7,12 @@ import static notification_app.util.ConsoleColors.GREEN_BOLD;
 import notification_app.mock_db.model.Notification;
 import notification_app.mock_db.model.User;
 
+/**
+ * This class implements the SenderStrategy interface and it is used to send notifications to subscribers via telegram.
+ * 
+ * @author nikhilbhardwaj01
+ * @version 1.0
+ */
 public class SendByTelegram implements SenderStrategy {
 
 	private static SendByTelegram INSTANCE;

@@ -6,14 +6,20 @@ import notification_app.service.SendBySms;
 import notification_app.service.SendByTelegram;
 import notification_app.service.SenderStrategy;
 
+/**
+ * This class has a factory method to provide a specific SenderStrategy instance.
+ * 
+ * @author nikhilbhardwaj01
+ * @version 1.0
+ */
+
 public class SenderStrategyFactory {
 	
 /**
- * If we agree on a particular class naming format, the below factory method 1 will be better because we will just need to have the class in the source.
- * Otherwise, we have the 2nd method. We will need to modify and add one more 'case' every time we add a new channel.
+ * If we standardize the class naming format, the below factory method will be a better choice because we will just need to have the class in the source.
+ * This implementation uses the reflection API for getting the instance of a particular SenderStrategy interface by name.
  */
 	
-// FACTORY 1
 //	public static SenderStrategy getSenderStrategy(String type) {
 //		type = type.substring(0,1).toUpperCase()+type.substring(1); // Because for any channel xyz, the class name format is SendByXyz.
 //		try {
@@ -25,8 +31,10 @@ public class SenderStrategyFactory {
 //		}
 //	}
 	
-	
-// FACTORY 2
+
+	/*
+	 * Otherwise, we have the below factory method. We will need to modify and add one more 'case' every time we add support for a new channel.
+	 */
 	public static SenderStrategy getSenderStrategy(String type) {
 		
 		switch(type) {
@@ -47,7 +55,5 @@ public class SenderStrategyFactory {
 		}
 		}
 	}
-	
-	
-	
+		
 }

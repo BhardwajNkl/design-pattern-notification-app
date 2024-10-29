@@ -7,6 +7,14 @@ import notification_app.factory.AppContext;
 import notification_app.factory.SenderStrategyFactory;
 import notification_app.mock_db.model.Notification;
 
+/**
+ * This is an implementation class for SenderService.
+ * It is also an observer class that observes the 'NotificationService' observable.
+ * When it is notified about a new notification, it sends that notification to all the subscribers who are active on that specified channel(specified in the notification).
+ * 
+ * @author nikhilbhardwaj01
+ * @version 1.0
+ */
 public class SenderServiceImpl implements SenderService, Observer {
 	
 	private static SenderServiceImpl INSTANCE;
@@ -37,7 +45,8 @@ public class SenderServiceImpl implements SenderService, Observer {
 	}
 
 	@Override
-	public void send() {		
+	public void send() {
+		// Get the sender strategy object based on the channel specified in the notification.
 		senderStrategy = SenderStrategyFactory.getSenderStrategy(notification.getChannel());
 		
 		if(senderStrategy!=null) {
@@ -48,7 +57,7 @@ public class SenderServiceImpl implements SenderService, Observer {
 				if(user.getUserChannelMap().containsKey(notification.getChannel())) {
 					senderStrategy.send(user, notification);
 				} else {
-					System.out.println(RED_BOLD+"Skipping User: "+user.getName() + " [ User is not available on channel: "+notification.getChannel()+"]"+DEFAULT+"\n");
+					System.out.println(RED_BOLD+"Skipping Subscriber: "+user.getName() + " [ Subscriber is not available on channel: "+notification.getChannel()+"]"+DEFAULT+"\n");
 				}
 			});
 		} else {

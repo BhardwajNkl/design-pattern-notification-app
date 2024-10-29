@@ -8,11 +8,14 @@ import java.util.Set;
 import notification_app.mock_db.model.Notification;
 
 /**
- * @author nikhilbhardwaj01
+ * It is an 'observable' class.
+ * NotificationService has a state: 'notifications'.
+ * whenever a notification is added, all the subscribers are updated about it.
  * 
- * It is the subject(observable) class being observed by message sender service.
- * NotificationService has a state: 'notifications'
- * whenever a notification is added, SenderService is updated and that service sends the newly added notification to all subscribers using the given channel.
+ * In this application, SenderService is an observer of this observable. Whenever a notification is added, the sender service pushes it to all the users who have subscribed.
+ * 
+ * @author nikhilbhardwaj01
+ * @version 1.0
  */
 
 public class NotificationServiceImpl implements NotificationService, Subject {

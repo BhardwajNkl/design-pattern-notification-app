@@ -4,11 +4,11 @@ import notification_app.mock_db.model.Notification;
 import notification_app.mock_db.model.User;
 
 /**
+ * This class implements the SenderStrategy interface and it is used to send notifications to subscribers via call.
+ * It is an adapter class for 'Caller.java' class.
  * 
  * @author nikhilbhardwaj01
- * 
- * This class is an adapter class for 'Caller' class.
- *
+ * @version 1.0
  */
 
 public class SendByCall implements SenderStrategy {
@@ -31,7 +31,7 @@ public class SendByCall implements SenderStrategy {
 	@Override
 	public void send(User subscriber, Notification notification) {
 		// the caller class provides call method which takes mobile number and message.
-		String mobileNuber = subscriber+"_mobile_number[placeholder]"; // just for demo.
+		String mobileNuber = subscriber.getUserChannelMap().get("call");
 		String message = notification.getMessage();
 		caller.call(mobileNuber, message);
 	}

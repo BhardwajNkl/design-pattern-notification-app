@@ -6,10 +6,19 @@ import static notification_app.util.ConsoleColors.RED_BOLD;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class represents a model for users.
+ * 
+ * @author nikhilbhardwaj01
+ * @version 1.0
+ */
 public class User {
 	
 	private String name;
 	
+	/**
+	 * A map with user availability channels(such as email, telegram) as key and the respective contact info(such as raju@gmail.com) as value.
+	 */
 	private Map<String, String> userChannelMap;
 	
 	public User(String name, String email, String smsNumber) {
@@ -41,7 +50,6 @@ public class User {
 	}
 	
 	
-
 	@Override
 	public String toString() {
 		return "User [name=" + name + ", userChannelMap=" + userChannelMap + "]";

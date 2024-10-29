@@ -1,6 +1,7 @@
 package notification_app;
 
 import static notification_app.util.ConsoleColors.BLUE_BOLD;
+
 import static notification_app.util.ConsoleColors.DEFAULT;
 import static notification_app.util.ConsoleColors.GREEN_BOLD;
 import static notification_app.util.ConsoleColors.PURPLE_BOLD;
@@ -16,9 +17,20 @@ import java.util.List;
 
 import notification_app.factory.AppContext;
 import notification_app.mock_db.model.User;
-import notification_app.service.AppFacade;public class Main {
+import notification_app.service.AppFacade;
+
+/**
+ * 
+ * @author nikhilbhardwaj01
+ * @version 1.0
+ *
+ */
+public class Main {
 	public static void main(String args[]) throws IOException {
-		
+		/*
+		 * Initialize the AppContext, which is like a central object factory.
+		 * AppContext holds an instance for each required component(object) in this application.
+		 */
 		AppContext.initialize();
 
 		AppFacade appFacade = AppContext.getObject(AppFacade.class);
@@ -26,17 +38,18 @@ import notification_app.service.AppFacade;public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String input = "";
 		String command = "";
-		System.out.print(DEFAULT);
+		System.out.print(DEFAULT); // Console color
 
 		showMenu(); // only shown in the beginning. latter only when user enters invalid commands or
 					// when the user needs help.
 
+		// Take user input and process it. Repeat until the user wants to exit.
 		do {
 			System.out.print(PURPLE_BOLD + "command " + YELLOW_BOLD+"$ ");
 			input = br.readLine();
 			System.out.print(DEFAULT);
 			
-			String[] inputTokens = sanitizeInputTokens(input);
+			String[] inputTokens = sanitizeInputTokens(input); // Break the input string into individual strings so that the command and it's arguments can be used for processing.
 
 			command = inputTokens[0];
 
@@ -162,7 +175,7 @@ import notification_app.service.AppFacade;public class Main {
 	
 	private static void showMenu() {
 		System.out.println("|===========================================================================================|");
-		System.out.println("| Enter your command. Syntax is as below.                                                   |");
+		System.out.println("| Enter your command. PLEASE PASS ARGUMENTS IN DOUBLE QUOTES.                               |");
 		System.out.println("| 1. To add user: "+YELLOW_BOLD+"add_user <name> <email_optional> <sms_number_optional>"+DEFAULT+"                    |");
 		System.out.println("| 2. To delete user: "+YELLOW_BOLD+"delete_user <name>"+DEFAULT+"                                                     |");
 		System.out.println("| 3. To add subscriber: "+YELLOW_BOLD+"add_subscriber <user's name>"+DEFAULT+"                                        |");
@@ -176,6 +189,11 @@ import notification_app.service.AppFacade;public class Main {
 		System.out.println("|===========================================================================================|");
 	}
 	
+	/**
+	 * 
+	 * @param input Command input string from user.
+	 * @return An array of strings extracted from the input string.
+	 */
 	private static String[] sanitizeInputTokens(String input) {
 		
 		input = input.trim().toLowerCase();

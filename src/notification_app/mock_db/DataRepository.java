@@ -10,6 +10,13 @@ import java.util.stream.Collectors;
 
 import notification_app.mock_db.model.User;
 
+/**
+ * This class acts as an in-memory storage.
+ * It stores the list of users and subscribers and provides methods for manipulating.
+ * 
+ * @author nikhilbhardwaj01
+ * @version 1.0
+ */
 public class DataRepository {
 	private static DataRepository INSTANCE;
 	
@@ -56,7 +63,6 @@ public class DataRepository {
 	
 	public void addSubscriber(String name) {
 		// check if user with given name exists
-		
 		boolean userWithGivenNameExists = users.stream().anyMatch(u->u.getName().equalsIgnoreCase(name));
 		
 		if(!userWithGivenNameExists) {

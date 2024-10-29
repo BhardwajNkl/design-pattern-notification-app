@@ -1,5 +1,10 @@
 package notification_app.mock_db.model;
-
+/**
+ * This class represents the model for notifications in the system.
+ * 
+ * @author nikhilbhardwaj01
+ * @version 1.0
+ */
 public class Notification {
 	
 	private String subject;

@@ -5,6 +5,12 @@ import java.util.List;
 import notification_app.factory.AppContext;
 import notification_app.mock_db.model.User;
 
+/**
+ * This class provides a unified interface to interact with the system. It is the implementation of 'facade design pattern'.
+ * 
+ * @author nikhilbhardwaj01
+ * @version 1.0
+ */
 public class AppFacadeImpl implements AppFacade {
 	
 	private static AppFacadeImpl INSTANCE;

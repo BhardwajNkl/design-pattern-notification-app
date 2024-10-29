@@ -1,4 +1,4 @@
-#Notification App
+# Notification App
 ## 1. Overview
 A console based core java application. The application simulates sending mass notifications to users who have subscribed.
 Different design patterns have been utilized in this application.
